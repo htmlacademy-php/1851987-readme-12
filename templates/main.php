@@ -84,24 +84,27 @@
             </div>
         </div>
         <div class="popular__posts">
-            <?php foreach ($posts as $post) : ?>
+            <?php foreach ($posts as $k => $post) : ?>
+                <?php
+                    $date = generate_date($k);
+                ?>
                 <article class="popular__post post <?php echo $post['type']; ?>">
                     <header class="post__header">
-                        <h2><?php echo $post['title']; ?></h2>
+                        <h2><?= htmlspecialchars($post['title']); ?></h2>
                     </header>
                     <div class="post__main">
                         <?php if ($post['type'] === 'post-quote') : ?>
                             <blockquote>
                                 <p>
-                                    <?php echo $post['content']; ?>
+                                    <?= htmlspecialchars($post['content']); ?>
                                 </p>
                                 <cite>Неизвестный Автор</cite>
                             </blockquote>
                         <?php elseif ($post['type'] === 'post-text') : ?>
-                            <p><?php echo $post['content']; ?></p>
+                            <p><?= htmlspecialchars($post['content']); ?></p>
                         <?php elseif ($post['type'] === 'post-photo') : ?>
                             <div class="post-photo__image-wrapper">
-                                <img src="img/<?php echo $post['content']; ?>" alt="Фото от пользователя" width="360" height="240">
+                                <img src="img/<?= htmlspecialchars($post['content']); ?>" alt="Фото от пользователя" width="360" height="240">
                             </div>
                         <?php elseif ($post['type'] === 'post-link') : ?>
                             <div class="post-link__wrapper">
@@ -111,10 +114,10 @@
                                             <img src="https://www.google.com/s2/favicons?domain=vitadental.ru" alt="Иконка">
                                         </div>
                                         <div class="post-link__info">
-                                            <h3><?php echo $post['title']; ?></h3>
+                                            <h3><?= htmlspecialchars($post['title']); ?></h3>
                                         </div>
                                     </div>
-                                    <span><?php echo $post['content']; ?></span>
+                                    <span><?= htmlspecialchars($post['content']); ?></span>
                                 </a>
                             </div>
                         <?php elseif ($post['type'] === 'post-video') : ?>
@@ -135,14 +138,14 @@
                     </div>
                     <footer class="post__footer">
                         <div class="post__author">
-                            <a class="post__author-link" href="#" title="Автор">
+                            <a class="post__author-link" href="#" title="<?= $date['full_date_format']; ?>">
                                 <div class="post__avatar-wrapper">
                                     <!--укажите путь к файлу аватара-->
-                                    <img class="post__author-avatar" src="img/<?php echo $post['avatar']; ?>" alt="Аватар пользователя">
+                                    <img class="post__author-avatar" src="img/<?= htmlspecialchars($post['avatar']); ?>" alt="Аватар пользователя">
                                 </div>
                                 <div class="post__info">
-                                    <b class="post__author-name"><?php echo $post['username']; ?></b>
-                                    <time class="post__time" datetime="">дата</time>
+                                    <b class="post__author-name"><?= htmlspecialchars($post['username']); ?></b>
+                                    <time class="post__time" datetime="<?= $date['full_date']; ?>"><?= $date['date_text']; ?></time>
                                 </div>
                             </a>
                         </div>

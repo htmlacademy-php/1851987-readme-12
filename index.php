@@ -1,5 +1,9 @@
 <?php
-include_once('helpers.php');
+require_once('helpers.php');
+date_default_timezone_set('Europe/Moscow');
+
+$is_auth = rand(0, 1);
+$user_name = 'Захар'; // укажите здесь ваше имя
 
 $posts = [
     [
@@ -39,7 +43,7 @@ $posts = [
     ]
 ];
 
-$page_content = include_template('main.php', ['posts' => $posts]);
-$layout_content = include_template('layout.php', ['page_content' => htmlspecialchars($page_content), 'page_title' => 'Readme - Главная']);
+$page_content = include_template('main.php', ['posts' => $posts, 'is_auth' => $is_auth, 'user_name' => $user_name]);
+$layout_content = include_template('layout.php', ['page_content' => $page_content, 'page_title' => 'Readme - Главная']);
 
 print(htmlspecialchars_decode($layout_content));
