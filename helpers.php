@@ -262,3 +262,49 @@ function generate_random_date($index)
 
     return $dt;
 }
+/**
+ * Генерирует разницу дат
+ * @param int $index индекс перебора массива
+ * @return string
+ */
+function generate_date($index) {
+
+    $generated_random_date = date_create(generate_random_date($index));
+    $today_date = date_create();
+    $date_diff = date_diff($generated_random_date, $today_date);
+    
+    if ((int) date_interval_format($date_diff, "%i") > 0 && (int) date_interval_format($date_diff, "%i") < 60) {
+
+        $date_count_value = date_interval_format($date_diff, "%i");
+        $date_count_text = get_noun_plural_form($date_count_value, 'минута', 'минуты', 'минут');
+
+    } elseif ((int) date_interval_format($date_diff, "%H") > 0 && (int) date_interval_format($date_diff, "%H") < 24) {
+
+        $date_count_value = date_interval_format($date_diff, "%H");
+        $date_count_text = get_noun_plural_form($date_count_value, 'час', 'часа', 'часов');
+
+    } elseif ((int) date_interval_format($date_diff, "%d") > 0 && (int) date_interval_format($date_diff, "%d") < 7) {
+
+        $date_count_value = date_interval_format($date_diff, "%d");
+        $date_count_text = get_noun_plural_form($date_count_value, 'день', 'дня', 'дней');
+
+    } elseif ((int) date_interval_format($date_diff, "%d") >= 7 && (int) date_interval_format($date_diff, "%d") < 5*7) {
+        
+        $date_count_value = floor((int) date_interval_format($date_diff, "%d") / 7);
+        $date_count_text = get_noun_plural_form($date_count_value, 'неделя', 'недели', 'недель');
+
+    } elseif ((int) date_interval_format($date_diff, "%m") > 0) {
+
+        $date_count_value = date_interval_format($date_diff, "%m");
+        $date_count_text = get_noun_plural_form($date_count_value, 'месяц', 'месяца', 'месяцев');
+
+    }
+
+    $date = [
+        'date_text' => $date_count_value . ' ' . $date_count_text,
+        'full_date' => generate_random_date($index),
+        'full_date_format' => date_format($generated_random_date, 'd.m.Y H:i'),
+    ];
+    
+    return $date;
+}
